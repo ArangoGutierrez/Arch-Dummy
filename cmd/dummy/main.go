@@ -30,13 +30,18 @@ import (
 	"github.com/klauspost/cpuid"
 )
 
+var GitCommit string
+var Arch string
+var Built string
+var GoVersion string
+
 // version returns the api version
 func version(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Dummy!\n"))
+	w.Write([]byte(fmt.Sprintf("{Git Commit:\"%s\",CPU_arch:%s,Built:\"%s\",Go_version:%s}\n", GitCommit, Arch, Built, GoVersion)))
 }
 
-// cpu returns the cpu info
-func cpu(w http.ResponseWriter, r *http.Request) {
+// hostCPU returns the cpu info
+func hostCPU(w http.ResponseWriter, r *http.Request) {
 	w.Write(
 		[]byte(fmt.Sprintf("{name:\"%s\",model:\"%d\",family:\"%d\"}\n", cpuid.CPU.BrandName, cpuid.CPU.Model, cpuid.CPU.Family)),
 	)
@@ -49,7 +54,7 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/version", version)
-	r.HandleFunc("/cpu", cpu)
+	r.HandleFunc("/cpu", hostCPU)
 
 	srv := &http.Server{
 		Addr: "0.0.0.0:8080",

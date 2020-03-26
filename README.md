@@ -39,4 +39,5 @@ Now you can
 ## API
 
 `/version`	: will retrieve info of the build host
+
 `/cpu`		: will retrieve info of the running host

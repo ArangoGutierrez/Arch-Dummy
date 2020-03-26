@@ -1,4 +1,5 @@
 [![Docker Repository on Quay](https://quay.io/repository/eduardoarango/arch-dummy/status "Docker Repository on Quay")](https://quay.io/repository/eduardoarango/arch-dummy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ArangoGutierrez/Arch-Dummy)](https://goreportcard.com/report/github.com/ArangoGutierrez/Arch-Dummy)
 
 # Arch-Dummy
 
@@ -21,7 +22,7 @@ Clone the repo and change dir into the cloned folder
 	/go/src/github.com/ArangoGutierrez/Arch-Dummy/cmd/dummy	
 ```
 
-or using buildah
+or using [buildah](https://buildah.io/)
 
 ```bash
 GIT_COMMIT=$(git rev-list -1 HEAD)
@@ -37,7 +38,7 @@ To run simply
 ./dummy
 ```
 
-or from a container
+or from a container use [podman](https://podman.io/)
 
 ```bash
 podman run --rm -p <any-port>:8080 quay.io/<your-quay-user>/arch-dummy

@@ -21,6 +21,14 @@ Clone the repo and change dir into the cloned folder
 	/go/src/github.com/ArangoGutierrez/Arch-Dummy/cmd/dummy	
 ```
 
+or using buildah
+
+```bash
+GIT_COMMIT=$(git rev-list -1 HEAD)
+buildah bud -t quay.io/<your-quay-user>/arch-dummy:$GIT_COMMIT -f build/Dockerfile
+```
+
+
 ## Run 
 
 To run simply 
@@ -29,7 +37,13 @@ To run simply
 ./dummy
 ```
 
-Now you can 
+or from a container
+
+```bash
+podman run --rm -p <any-port>:8080 quay.io/<your-quay-user>/arch-dummy
+```
+
+Now you can get the CPU info of the running host, along to the CPU of the host that built the image
 
 ```bash
 [eduardo@fedora-ws Arch-Dummy]$ curl localhost:8080/version 

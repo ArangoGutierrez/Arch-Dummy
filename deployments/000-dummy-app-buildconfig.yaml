@@ -1,0 +1,50 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: dummy-arch-info
+  name: dummy-arch-info
+spec: {}
+---
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: dummy-arch-info
+  namespace: arch-dummy
+  selfLink: >-
+    /apis/build.openshift.io/v1/namespaces/arch-dummy/buildconfigs/dummy-arch-info
+  labels:
+    app: dummy-arch-info
+    app.kubernetes.io/component: dummy-arch-info
+    app.kubernetes.io/instance: dummy-arch-info
+    app.kubernetes.io/part-of: arch-dummy-app
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'dummy-arch-info:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: build/Dockerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/ArangoGutierrez/Arch-Dummy'
+    contextDir: /
+  triggers:
+    - type: Generic
+      generic:
+        secretReference:
+          name: dummy-arch-info-generic-webhook-secret
+    - type: GitHub
+      github:
+        secretReference:
+          name: dummy-arch-info-github-webhook-secret
+    - type: ConfigChange
+  runPolicy: Parallel

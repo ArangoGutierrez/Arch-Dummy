@@ -35,6 +35,11 @@ var Arch string
 var Built string
 var GoVersion string
 
+// blank returns
+func blank(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("A dummy server that retrieves basic info from the host"))
+}
+
 // version returns the api version
 func version(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprintf("{Git Commit:\"%s\",CPU_arch:%s,Built:\"%s\",Go_version:%s}\n", GitCommit, Arch, Built, GoVersion)))
@@ -53,6 +58,7 @@ func main() {
 	flag.Parse()
 
 	r := mux.NewRouter()
+	r.HandleFunc("/", blank)
 	r.HandleFunc("/version", version)
 	r.HandleFunc("/cpu", hostCPU)
 

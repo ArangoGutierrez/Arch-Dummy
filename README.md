@@ -10,7 +10,6 @@ A dummy server that retrieves basic info from the host
 Clone the repo and change dir into the cloned folder
 
 ```bash
-
 	CPU_ARCH=$(lscpu |grep -i 'model name'|awk '{print  "\""$3, $4, $5, $6, $7, $8"\""}') && \
 	GIT_COMMIT=$(git rev-list -1 HEAD) && \
 	BUILT=$(date) && \

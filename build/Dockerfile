@@ -1,5 +1,7 @@
 FROM registry.access.redhat.com/ubi8/go-toolset AS builder
 WORKDIR /go/src/github.com/ArangoGutierrez/Arch-Dummy
+
+USER root
 COPY . .
 
 RUN CPU_ARCH=$(lscpu |grep -i 'model name'|awk '{print  "\""$3, $4, $5, $6, $7, $8"\""}') && \
@@ -14,6 +16,8 @@ RUN CPU_ARCH=$(lscpu |grep -i 'model name'|awk '{print  "\""$3, $4, $5, $6, $7, 
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 COPY --from=builder /go/src/github.com/ArangoGutierrez/Arch-Dummy/dummy /usr/bin/
+
+USER 1001
 
 ENTRYPOINT ["/usr/bin/dummy"]
 LABEL io.k8s.display-name="CPU Dummy info server" \
